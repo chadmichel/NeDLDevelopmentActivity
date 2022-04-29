@@ -84,11 +84,43 @@ export interface ShoppingListItem {
 ```
 
 2. Generate a service for backend communication.
-   ng g s Backend
+
+```
+ng g s Backend
+```
 
 3. Modify the backend service backend.service.ts file to return some static fake data.
 
+```
+export class BackendService {
+  constructor() {}
+
+  async shoppingList(): Promise<ShoppingListItem[]> {
+    return new Promise((resolve) => {
+      resolve([
+        { title: 'Milk' },
+        { title: 'Eggs' },
+        { title: 'Stick of Butter' },
+      ] as ShoppingListItem[]);
+    });
+  }
+}
+```
+
 4. Modify the component TypeScript to call the backend service to get the dat.
+
+```
+export class MyListComponent implements OnInit {
+  shoppingList: ShoppingListItem[] | undefined;
+
+  constructor(private backend: BackendService) {}
+
+  async ngOnInit() {
+    this.shoppingList = await this.backend.shoppingList();
+    console.log(JSON.stringify(this.shoppingList));
+  }
+}
+```
 
 5. Modify the template.
 
@@ -102,3 +134,54 @@ export interface ShoppingListItem {
 ## Activity 4
 
 Create a .NET Core Backend to return the shopping list.
+
+1. Create a new .NET Core project.
+
+```
+dotnet new webapi -n Backend
+```
+
+2. Add a DTO for the shopping list items.
+
+```
+public class ShoppingListItem
+{
+    public string Title { get; set; }
+}
+```
+
+3. Create a new ShoppingListController.
+
+```
+[ApiController]
+[Route("[controller]")]
+public class ShoppingListController : ControllerBase
+{
+    private readonly ILogger<WeatherForecastController> _logger;
+
+    public ShoppingListController(ILogger<WeatherForecastController> logger)
+    {
+        _logger = logger;
+    }
+
+    [HttpGet(Name = "GetShoppingList")]
+    public ShoppingListItem[] Get()
+    {
+        var items = new ShoppingListItem[] {
+            new ShoppingListItem()
+            {
+                Title = "Milk"
+            },
+            new ShoppingListItem()
+            {
+                Title = "Eggs"
+            },
+            new ShoppingListItem()
+            {
+                Title = "Stick of Butter"
+            }
+        };
+        return items;
+    }
+}
+```
