@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { BackendService } from '../backend.service';
 import { ShoppingListItem } from '../shopping-list-item';
 
 @Component({
@@ -7,7 +8,12 @@ import { ShoppingListItem } from '../shopping-list-item';
   styleUrls: ['./my-list.component.css'],
 })
 export class MyListComponent implements OnInit {
-  constructor() {}
+  shoppingList: ShoppingListItem[] | undefined;
 
-  async ngOnInit() {}
+  constructor(private backend: BackendService) {}
+
+  async ngOnInit() {
+    this.shoppingList = await this.backend.shoppingList();
+    console.log(JSON.stringify(this.shoppingList));
+  }
 }
