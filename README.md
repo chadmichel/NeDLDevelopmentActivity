@@ -23,6 +23,8 @@ Create a very simple HTML web page for a shopping list.
 3. Run http-server
    http-server
 
+![Shopping List Example](https://raw.githubusercontent.com/chadmichel/NeDLDevelopmentActivity/main/Images/ShoppingListExample.png)
+
 ## Activity 2
 
 Recreate the shopping list as an Angular application.
