@@ -98,3 +98,7 @@ export interface ShoppingListItem {
     <li *ngFor="let item of shoppingList">{{item.title}}</li>
 </ol>
 ```
+
+## Activity 4
+
+Create a .NET Core Backend to return the shopping list.
