@@ -185,3 +185,86 @@ public class ShoppingListController : ControllerBase
     }
 }
 ```
+
+5. Because our Angular application will be running on a different hostname we will need to enable CORS. We should only enable CORS for the hostname of our Angular application, but for this simple demo we will enable CORS for all domains. To accomplish this change the program.cs file to enable CORS.
+
+```
+var builder = WebApplication.CreateBuilder(args);
+
+// Add services to the container.
+
+builder.Services.AddControllers();
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+builder.Services.AddCors();
+
+var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
+app.UseHttpsRedirection();
+
+app.UseCors(x =>
+x.AllowAnyMethod()
+.AllowAnyOrigin()
+.AllowAnyHeader()
+.SetIsOriginAllowed(origin => true));
+
+app.UseAuthorization();
+
+app.MapControllers();
+
+app.Run();
+```
+
+6. After we have Shopping List controller we will test the controller using Postman. To do this this lets run the dotnet application in VS Code.
+
+7. Run the postman application. Create a request that runs against "https://localhost:7027/ShoppingList".
+
+## Activity 5
+
+Wire up the Angular application to the .NET backend.
+
+1. Modify the Angular app.module.ts file to include the HttpClientModule.
+
+```
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { MyListComponent } from './my-list/my-list.component';
+
+import { HttpClientModule } from '@angular/common/http';
+
+@NgModule({
+  declarations: [AppComponent, MyListComponent],
+  imports: [BrowserModule, AppRoutingModule, HttpClientModule],
+  providers: [],
+  bootstrap: [AppComponent],
+})
+export class AppModule {}
+```
+
+2. Modify the Angular backend service backend.service.ts file to call our .NET Core backend.
+
+```
+export class BackendService {
+  constructor(private http: HttpClient) {}
+
+  async shoppingList(): Promise<ShoppingListItem[]> {
+    return firstValueFrom(
+      this.http.get<ShoppingListItem[]>('https://localhost:7027/ShoppingList')
+    );
+  }
+}
+```
+
+Now we have an Angular application calling a .NET Core application. Lot of steps getting this going, but if you can get this running this same pattern can build a lot of software.
