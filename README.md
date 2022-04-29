@@ -137,6 +137,8 @@ export class MyListComponent implements OnInit {
 
 Create a .NET Core Backend to return the shopping list.
 
+![Backend Service Image](https://github.com/chadmichel/NeDLDevelopmentActivity/blob/main/Images/BackendSource.png)
+
 1. Create a new .NET Core project.
 
 ```
@@ -229,6 +231,8 @@ app.Run();
 6. After we have Shopping List controller we will test the controller using Postman. To do this this lets run the dotnet application in VS Code.
 
 7. Run the postman application. Create a request that runs against "https://localhost:7027/ShoppingList".
+
+~[Postman example](https://raw.githubusercontent.com/chadmichel/NeDLDevelopmentActivity/main/Images/Postman.png)
 
 ## Activity 5
 
