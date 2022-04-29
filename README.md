@@ -232,7 +232,7 @@ app.Run();
 
 7. Run the postman application. Create a request that runs against "https://localhost:7027/ShoppingList".
 
-~[Postman example](https://raw.githubusercontent.com/chadmichel/NeDLDevelopmentActivity/main/Images/Postman.png)
+![Postman example](https://raw.githubusercontent.com/chadmichel/NeDLDevelopmentActivity/main/Images/Postman.png)
 
 ## Activity 5
 
