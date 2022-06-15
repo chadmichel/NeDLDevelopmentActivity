@@ -2,14 +2,18 @@
 
 Tool chain walk through created for NeDL program.
 
+## Related Blog Posts
+
+- https://dontpaniclabs.com/blog/post/2022/05/17/top-to-bottom-with-angular-and-net-core/
+
 ## Activity 1
 
 Create a very simple HTML web page for a shopping list.
 
-1. Install http-server
+1. Install the http-server npm module. This module makes hosting a static site very easy across many platforms.
    npm install -g http-server
 
-2. Create a simple HTML page to display a shopping list
+2. Now we need to create a simple HTML page to display a shopping list.
 
 ```
         <h1>Shopping List</h1>
@@ -20,7 +24,7 @@ Create a very simple HTML web page for a shopping list.
         </ol>
 ```
 
-3. Run http-server
+3. Run the node http server. This will run a lightweight server that is easy to start and stop.
    http-server
 
 ![Shopping List Example](https://raw.githubusercontent.com/chadmichel/NeDLDevelopmentActivity/main/Images/ShoppingListExample.png)
@@ -124,7 +128,7 @@ export class MyListComponent implements OnInit {
 }
 ```
 
-5. Modify the template.
+5. Modify the template to use databinding to display the data.
 
 ```
 <h1>Shopping List</h1>
@@ -154,7 +158,7 @@ public class ShoppingListItem
 }
 ```
 
-3. Create a new ShoppingListController.
+3. Create a new ShoppingListController in our .NET project. Controllers should go in the Controller folder.
 
 ```
 [ApiController]
@@ -190,7 +194,8 @@ public class ShoppingListController : ControllerBase
 }
 ```
 
-5. Because our Angular application will be running on a different hostname we will need to enable CORS. We should only enable CORS for the hostname of our Angular application, but for this simple demo we will enable CORS for all domains. To accomplish this change the program.cs file to enable CORS.
+5. Because our Angular application will be running on a different hostname, we will need to enable CORS. We should only enable CORS for the hostname of our Angular application, but for this simple demo we will enable CORS for all domains.
+   Why do we have to do this? What is CORS? CORS is a security mechanism that browsers use to help prevent malicious scripts from running code without a user’s knowledge. With CORS, we restrict our applications as much as possible.
 
 ```
 var builder = WebApplication.CreateBuilder(args);

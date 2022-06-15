@@ -14,15 +14,7 @@ builder.Services.AddDbContext<ShoppingDatabase>(options =>
     options.UseSqlServer("<YOUR CONNECTION STRING>"));
 
 // Add cors
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy(name: "Dev",
-                      builder =>
-                      {
-                          builder.AllowAnyOrigin().AllowAnyMethod();
-                      });
-});
-
+builder.Services.AddCors();
 
 var app = builder.Build();
 
@@ -37,6 +29,12 @@ if (app.Environment.IsDevelopment())
 app.UseCors("Dev");
 
 app.UseHttpsRedirection();
+
+app.UseCors(x =>
+x.AllowAnyMethod()
+.AllowAnyOrigin()
+.AllowAnyHeader()
+.SetIsOriginAllowed(origin => true));
 
 app.UseAuthorization();
 
