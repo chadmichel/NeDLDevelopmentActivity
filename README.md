@@ -274,3 +274,97 @@ export class BackendService {
 ```
 
 Now we have an Angular application calling a .NET Core application. Lot of steps getting this going, but if you can get this running this same pattern can build a lot of software.
+
+## Activity 6
+
+The previous series of activities got us an Angular application running making an HTTP call to a .NET Core backend to retrieve a shopping list.
+
+In this activity we will extend our .NET backend to use SQL Server.
+
+First, lets create a Shopping database.
+
+```
+create Database Shopping
+```
+
+Next we need to create a ShoppingListItems table.
+
+```
+create table ShoppingListItems
+(
+    Id int IDENTITY(1,1) primary key clustered,
+    Title nvarchar(100)
+)
+```
+
+Now that we have a database table. We need to insert some data. We can achieve this just straight SQL.
+
+```
+insert into ShoppingListItems
+    (Title)
+values
+    ('Milk'),
+    ('Eggs'),
+    ('Stick of Butter')
+```
+
+Let's select our data to make sure we inserted it correctly.
+
+```
+select * from ShoppingListItems;
+```
+
+Now we need to update our .NET backend to query our database. There are a lot of options to achieve this goal. In this case we will use Entity Framework to retrieve the data.
+
+For our .NET application to use Entity Framework we will first have to add a reference to Entity Framework to our project. To do this we can use the .NET CLI to include the nuget package for EntityFramework.
+
+```
+dotnet add package Microsoft.EntityFrameworkCore.SqlServer
+```
+
+Now we need to create a class for our EntityFramework database context.
+
+```
+using Microsoft.EntityFrameworkCore;
+
+public class ShoppingDatabase : DbContext
+{
+
+    public ShoppingDatabase(DbContextOptions<ShoppingDatabase> options) : base(options)
+    {
+
+    }
+
+    public virtual DbSet<ShoppingListItem> ShoppingListItems { get; set; }
+}
+```
+
+Now that we have to Database context we must wire it up into the .NET Core's dependency services.
+
+```
+// Configure the database context service.
+builder.Services.AddDbContext<ShoppingDatabase>(options =>
+    options.UseSqlServer("<YOUR CONNECTION STRING>"));
+```
+
+The controller ShoppingListController can be updated to use the database context to retrieve the items from the database.
+
+```
+public class ShoppingListController : ControllerBase
+{
+    ShoppingDatabase Database { get; set; }
+
+    public ShoppingListController(ShoppingDatabase database)
+    {
+        Database = database;
+    }
+
+    [HttpGet(Name = "GetShoppingList")]
+    public ShoppingListItem[] Get()
+    {
+        return Database.ShoppingListItems.ToArray();
+    }
+}
+```
+
+Now we should have an Angular front end. Calling a .NET Core backend. Communnicating with a SQL Server data store. This pattern / setup is a good starting point for understanding much of modern application hosting.

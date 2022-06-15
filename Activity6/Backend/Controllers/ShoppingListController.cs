@@ -6,30 +6,32 @@ namespace Backend.Controllers;
 [Route("[controller]")]
 public class ShoppingListController : ControllerBase
 {
-    private readonly ILogger<WeatherForecastController> _logger;
+    ShoppingDatabase Database { get; set; }
 
-    public ShoppingListController(ILogger<WeatherForecastController> logger)
+    public ShoppingListController(ShoppingDatabase database)
     {
-        _logger = logger;
+        Database = database;
     }
 
     [HttpGet(Name = "GetShoppingList")]
     public ShoppingListItem[] Get()
     {
-        var items = new ShoppingListItem[] {
-            new ShoppingListItem()
-            {
-                Title = "Milk"
-            },
-            new ShoppingListItem()
-            {
-                Title = "Eggs"
-            },
-            new ShoppingListItem()
-            {
-                Title = "Stick of Butter"
-            }
-        };
-        return items;
+        return Database.ShoppingListItems.ToArray();
+
+        //var items = new ShoppingListItem[] {
+        //    new ShoppingListItem()
+        //    {
+        //        Title = "Milk"
+        //    },
+        //    new ShoppingListItem()
+        //    {
+        //        Title = "Eggs"
+        //    },
+        //    new ShoppingListItem()
+        //    {
+        //        Title = "Stick of Butter"
+        //    }
+        //};
+        //return items;
     }
 }
