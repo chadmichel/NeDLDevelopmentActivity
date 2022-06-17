@@ -5,6 +5,7 @@ Tool chain walk through created for NeDL program.
 ## Related Blog Posts
 
 - https://dontpaniclabs.com/blog/post/2022/05/17/top-to-bottom-with-angular-and-net-core/
+- https://dontpaniclabs.com/blog/post/2022/06/16/top-to-more-bottom-with-angular-and-net-core/
 
 ## Activity 1
 
