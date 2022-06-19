@@ -2,6 +2,16 @@
 
 Tool chain walk through created for NeDL program.
 
+## Required Software
+
+- https://code.visualstudio.com
+- https://dotnet.microsoft.com/en-us/download
+- https://nodejs.org/en/
+- Install Angular https://angular.io/guide/setup-local
+   - npm install -g @angular/cli
+- Install HTTP Server
+   - npm install -g http-server
+
 ## Related Blog Posts
 
 - https://dontpaniclabs.com/blog/post/2022/05/17/top-to-bottom-with-angular-and-net-core/
