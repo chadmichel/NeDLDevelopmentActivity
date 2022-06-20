@@ -384,3 +384,15 @@ public class ShoppingListController : ControllerBase
 ```
 
 Now we should have an Angular front end. Calling a .NET Core backend. Communnicating with a SQL Server data store. This pattern / setup is a good starting point for understanding much of modern application hosting.
+
+# Bonus
+
+If you get through the other activites, there is more to accomplish.
+
+* Move the connection string to configuration. https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-6.0
+* Change the ShoppingListController to call a new service called ShoppingListAccessor. Move the data access to the newly created ShoppingListAccessor service.
+* Change the ShoppingListAccessor to only return shopping list items with an Id > 2. How do you write this query?
+
+
+
+
